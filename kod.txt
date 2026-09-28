@@ -1,0 +1,51 @@
+// --- DEFINICJE PINÓW DLA POSZCZEGÓLNYCH KIERUNKÓW ---
+#define RED_1 2
+#define GREEN_1 6
+
+#define RED_2 3
+#define GREEN_2 7
+
+#define RED_3 4
+#define GREEN_3 8
+
+#define RED_4 5
+#define GREEN_4 9
+
+void setup() {
+  // Ustawienie wszystkich pinów od 2 do 9 jako wyjścia
+  for (int i = 2; i <= 9; i++) {
+    pinMode(i, OUTPUT);
+  }
+}
+
+void loop() {
+  // --- START: WSZYSTKIE CZERWONE NA 3 SEKUNDY ---
+  wszystkieCzerwone();
+  delay(3000);
+
+  // --- OBSŁUGA KIERUNKÓW PO KOLEI (Zgodnie z ruchem wskazówek zegara) ---
+  uruchomKierunek(RED_1, GREEN_1);
+  uruchomKierunek(RED_2, GREEN_2);
+  uruchomKierunek(RED_3, GREEN_3);
+  uruchomKierunek(RED_4, GREEN_4);
+}
+
+// --- FUNKCJA ODPOWIEDZIALNA ZA SEKWENCJĘ DLA DANEGO KIERUNKU ---
+void uruchomKierunek(int pinRed, int pinGreen) {
+  digitalWrite(pinRed, LOW);    // Gaszenie czerwonego dla tego kierunku
+  delay(1000);                 // Przerwa 1 sekunda
+  digitalWrite(pinGreen, HIGH); // Zapalenie zielonego
+  delay(5000);                 // Zielone świeci 5 sekund
+  digitalWrite(pinGreen, LOW);  // Gaszenie zielonego
+  
+  wszystkieCzerwone();         // Powrót do wszystkich czerwonych
+  delay(3000);                 // Czas trwania wszystkich czerwonych to 3 sekundy
+}
+
+// --- FUNKCJA POMOCNICZA: WSZYSTKIE CZERWONE ---
+void wszystkieCzerwone() {
+  digitalWrite(RED_1, HIGH);  digitalWrite(GREEN_1, LOW);
+  digitalWrite(RED_2, HIGH);  digitalWrite(GREEN_2, LOW);
+  digitalWrite(RED_3, HIGH);  digitalWrite(GREEN_3, LOW);
+  digitalWrite(RED_4, HIGH);  digitalWrite(GREEN_4, LOW);
+}
